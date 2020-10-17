@@ -1,0 +1,20 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[packages]
+django = "==3.0"
+django-environ = "*"
+pytest = "*"
+pytest-django = "*"
+graphene-django = "*"
+django-graphql-jwt = "*"
+django-filter = "*"
+django-cors-headers = "*"
+uwsgi = "*"
+psycopg2 = "*"
+django-graphql-auth = "*"
+
+[scripts]
+server = "python manage.py runserver"
