@@ -5,3 +5,5 @@
 **/__pycache__/
 .python-version
 **/.DS_Store
+
+src/restaurant_project/.env
