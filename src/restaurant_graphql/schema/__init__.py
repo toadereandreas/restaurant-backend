@@ -2,7 +2,7 @@ import graphene
 
 from .dummy import Query as DummyQuery, Mutation as DummyMutation
 from .user import Query as UserQuery, Mutation as UserMutation
-
+# from graphql_auth.schema import UserQuery, MeQuery
 
 class Query(
     UserQuery,
@@ -13,8 +13,8 @@ class Query(
 
 
 class Mutation(
-    UserMutation,
     DummyMutation,
+    UserMutation,
     graphene.ObjectType
 ):
     pass
