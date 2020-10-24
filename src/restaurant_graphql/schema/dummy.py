@@ -1,11 +1,11 @@
 import graphene
 
-from windshopper_entities.models import Dummy
-from windshopper_graphql.schema.types.base import ErrorType
-from windshopper_graphql.schema.types.dummy import DummyNode, DummyList, DummyInput
+from restaurant_entities.models import Dummy
+from restaurant_graphql.schema.types.base import ErrorType
+from restaurant_graphql.schema.types.dummy import DummyNode, DummyList, DummyInput
 
-from windshopper_graphql.schema.helpers import get_errors
-from windshopper_graphql.forms.dummy import DummyForm
+from restaurant_graphql.schema.helpers import get_errors
+from restaurant_graphql.forms.dummy import DummyForm
 from graphql.error import GraphQLError
 
 

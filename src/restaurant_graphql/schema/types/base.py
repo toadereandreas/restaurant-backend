@@ -2,7 +2,7 @@ import graphene
 from graphene_django import DjangoObjectType
 
 
-class WindShopperObjectType(DjangoObjectType):
+class RestaurantObjectType(DjangoObjectType):
     class Meta:
         abstract = True
 
@@ -21,4 +21,4 @@ class ErrorType(graphene.ObjectType):
         graphene.String,
         description='A list of error messages.'
     )
-    errors = graphene.List('windshopper_graphql.schema.types.base.ErrorType')
+    errors = graphene.List('restaurant_graphql.schema.types.base.ErrorType')

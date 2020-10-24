@@ -1,4 +1,4 @@
-from windshopper_entities.models import Dummy
+from restaurant_entities.models import Dummy
 from django.core.exceptions import ValidationError
 from .base import BaseForm
 

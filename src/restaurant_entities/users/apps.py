@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class UsersConfig(AppConfig):
-    name = 'windshopper_entities.users'
+    name = 'restaurant_entities.users'

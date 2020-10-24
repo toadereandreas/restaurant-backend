@@ -1,9 +1,9 @@
-from .base import WindShopperObjectType
+from .base import RestaurantObjectType
 import graphene
-from windshopper_entities.models import Dummy
+from restaurant_entities.models import Dummy
 
 
-class DummyNode(WindShopperObjectType):
+class DummyNode(RestaurantObjectType):
     class Meta:
         model = Dummy
         fields = [
