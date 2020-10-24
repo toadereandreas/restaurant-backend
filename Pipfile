@@ -13,7 +13,8 @@ django-graphql-jwt = "*"
 django-filter = "*"
 django-cors-headers = "*"
 uwsgi = "*"
-psycopg2 = "*"
+psycopg2 = {version = "*", sys_platform = "== 'darwin'"}
+psycopg2-binary = {version = "*", sys_platform = "== 'linux'"}
 django-graphql-auth = "*"
 
 [scripts]
