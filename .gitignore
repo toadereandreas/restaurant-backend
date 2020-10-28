@@ -6,4 +6,4 @@
 .python-version
 **/.DS_Store
 
-src/restaurant_project/.env
+src/restaurant_project/settings/.env

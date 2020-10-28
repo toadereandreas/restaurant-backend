@@ -26,12 +26,6 @@ environ.Env.read_env()
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('SECRET_KEY', default='unsafe-key-please-dont-use-this')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -78,7 +72,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'restaurant_project.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 DATABASES = {
@@ -119,14 +112,10 @@ GRAPHENE = {
     ]
 }
 
-
 AUTHENTICATION_BACKENDS = [
     "graphql_auth.backends.GraphQLAuthBackend",
     'django.contrib.auth.backends.ModelBackend',
 ]
-
-SESSION_COOKIE_SECURE = False
-CSRF_COOKIE_SECURE = False
 
 GRAPHQL_AUTH = {
     'LOGIN_ALLOWED_FIELDS': ['email', 'username'],
@@ -153,8 +142,6 @@ GRAPHQL_JWT = {
     ],
 }
 
-
-
 AUTH_USER_MODEL = 'users.CustomUser'
 
 # Internationalization
@@ -176,3 +163,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+if env('DJANGO_DEVELOPMENT'):
+    from .development_settings import *
+else:
+    from .production_settings import *
