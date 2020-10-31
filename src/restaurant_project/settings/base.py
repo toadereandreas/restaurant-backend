@@ -72,19 +72,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'restaurant_project.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('DB_NAME'),
-        'USER': 'suciupatrick',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '',
-    }
-}
-
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
@@ -149,12 +136,9 @@ AUTH_USER_MODEL = 'users.CustomUser'
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
-
+TIME_ZONE = 'Europe/Bucharest'
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -163,9 +147,14 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-
-
-if env('DJANGO_DEVELOPMENT'):
-    from .development_settings import *
-else:
+STATIC_ROOT = 'static'
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'conference_project', 'static')
+# ]
+# # STATICFILES_DIRS = [
+# #     '/var/app/current/src/restaurant_project/static/'
+# # ]
+if os.environ.get('DJANGO_DEVELOPMENT', "dev") == "production":
     from .production_settings import *
+else:
+    from .development_settings import *
