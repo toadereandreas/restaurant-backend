@@ -23,7 +23,6 @@ class MenuItemList(graphene.ObjectType):
 
 class MenuItemInput(graphene.InputObjectType):
     internal_name = graphene.String()
-    # picture = graphene.String()
     picture = graphene.Field(lambda: ImageField)
     price = graphene.Decimal()
     quantity = graphene.String()

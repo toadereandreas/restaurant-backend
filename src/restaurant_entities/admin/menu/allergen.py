@@ -12,4 +12,4 @@ class AllergenAdmin(admin.ModelAdmin):
         AllergenTranslationInline,
     ]
 
-admin.site.register(Allergen, AllergenAdmin)   
+admin.site.register(Allergen, AllergenAdmin)
