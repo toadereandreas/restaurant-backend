@@ -3,7 +3,7 @@ from ..base import GlobalID
 
 
 class Category(GlobalID, models.Model):
-    pass
+    internal_name = models.CharField(max_length=255)
 
     def __str__(self):
-        return "category"
+        return self.internal_name

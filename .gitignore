@@ -5,7 +5,7 @@
 **/__pycache__/
 .python-version
 **/.DS_Store
-
+images
 src/restaurant_project/settings/.env
 
 # Elastic Beanstalk Files
