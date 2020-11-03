@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'graphql_auth',
     'graphql_jwt.refresh_token.apps.RefreshTokenConfig',
     'restaurant_entities.users',
+
+    'storages',
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -152,6 +154,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 STATIC_URL = '/static/'
 STATIC_ROOT = 'static'
+
+MEDIA_URL = '/images/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static')
+
 # STATICFILES_DIRS = [
 #     os.path.join(BASE_DIR, 'conference_project', 'static')
 # ]
