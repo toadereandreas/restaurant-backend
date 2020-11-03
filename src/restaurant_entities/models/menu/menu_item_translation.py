@@ -11,7 +11,6 @@ class MenuItemTranslation(GlobalID, models.Model):
     language = models.ForeignKey(Language, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     description = models.TextField()
-    quantity = models.CharField(max_length=50)
    
     def __str__(self):
         return self.name
