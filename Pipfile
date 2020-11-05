@@ -16,6 +16,8 @@ uwsgi = "*"
 psycopg2 = {version = "*", sys_platform = "== 'darwin'"}
 psycopg2-binary = {version = "*", sys_platform = "== 'linux'"}
 django-graphql-auth = "*"
+django-storages = "*"
+pillow = "*"
 
 [scripts]
 server = "python manage.py runserver"
