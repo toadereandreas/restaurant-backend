@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'environ',
     'graphene_django',
     'corsheaders',
     'restaurant_entities.apps.RestaurantEntitiesConfig',
@@ -164,6 +165,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static')
 # # STATICFILES_DIRS = [
 # #     '/var/app/current/src/restaurant_project/static/'
 # # ]
+
 if os.environ.get('DJANGO_DEVELOPMENT', "dev") == "production":
     from .production_settings import *
 else:

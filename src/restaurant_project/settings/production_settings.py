@@ -3,11 +3,17 @@ from restaurant_project.settings.base import *
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']  # maybe whilelist in the future some of the hosts
+ALLOWED_HOSTS = ['restaurant.playgroundev.com', 'localhost', '127.0.0.1',
+                 'restaurant-env.eba-prznaj7v.eu-west-3.elasticbeanstalk.com']
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': '5432',
     }
 }
 
