@@ -28,4 +28,4 @@ class Query(graphene.ObjectType):
 
     def resolve_menu_items(self, info, **kwargs):
         qs = MenuFilter(kwargs)
-        return MenuItemList(qs)
+        return MenuItemList(qs.qs)

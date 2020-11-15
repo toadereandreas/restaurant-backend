@@ -112,17 +112,15 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 GRAPHQL_AUTH = {
-    'LOGIN_ALLOWED_FIELDS': ['email', 'username'],
+    'LOGIN_ALLOWED_FIELDS': ['email'],
     'USER_NODE_EXCLUDE_FIELDS': ["password"],
-    'REGISTER_MUTATION_FIELDS': {
-        "email": "String",
-    },
+    # 'REGISTER_MUTATION_FIELDS': {
+    #     "email": "String",
+    # },
 }
 
 GRAPHQL_JWT = {
-    'JWT_VERIFY_EXPIRATION': True,
-    'JWT_LONG_RUNNING_REFRESH_TOKEN': True,
-    "JWT_ALLOW_ANY_CLASSES": [
+    'JWT_ALLOW_ANY_CLASSES': [
         "graphql_auth.mutations.Register",
         "graphql_auth.mutations.VerifyAccount",
         "graphql_auth.mutations.ResendActivationEmail",
@@ -134,6 +132,8 @@ GRAPHQL_JWT = {
         "graphql_auth.mutations.RevokeToken",
         "graphql_auth.mutations.VerifySecondaryEmail",
     ],
+    'JWT_VERIFY_EXPIRATION': True,
+    'JWT_LONG_RUNNING_REFRESH_TOKEN': True,
 }
 
 AUTH_USER_MODEL = 'users.CustomUser'
@@ -148,7 +148,14 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'restaurantubb@gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'restaurantubb@gmail.com'
+EMAIL_HOST_PASSWORD = 'zN:+$~mi+apX#YdZ{3f#jSZD'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
