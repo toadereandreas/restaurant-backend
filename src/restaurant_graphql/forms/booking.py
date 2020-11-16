@@ -12,4 +12,3 @@ class BookingForm(BaseForm):
             'number_of_persons',
             'phone_number'
         ]
-

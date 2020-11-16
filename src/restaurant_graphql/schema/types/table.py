@@ -18,4 +18,5 @@ class TableList(graphene.ObjectType):
 
 
 class TableInput(graphene.InputObjectType):
-    table_code = graphene.String()
+    name = graphene.String()
+    code = graphene.String()
