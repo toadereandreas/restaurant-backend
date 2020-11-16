@@ -14,6 +14,10 @@ class BookingNode(RestaurantObjectType):
             'phone_number'
         ]
 
+    id = graphene.ID()
+
+    def resolve_id(self, info):
+        return Booking.get_pk(gid=self.gid)
 
 class BookingList(graphene.ObjectType):
     data = graphene.List(BookingNode)

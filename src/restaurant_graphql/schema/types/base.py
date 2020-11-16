@@ -6,7 +6,7 @@ class RestaurantObjectType(DjangoObjectType):
     class Meta:
         abstract = True
 
-    def resolve_id(self, info):
+    def resolve_id(self, info): # Deprecated for now
         return self.gid
 
 

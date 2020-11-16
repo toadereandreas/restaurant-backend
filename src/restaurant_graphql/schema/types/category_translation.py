@@ -13,6 +13,11 @@ class CategoryTranslationNode(RestaurantObjectType):
             'name'
         ]
 
+    id = graphene.ID()
+
+    def resolve_id(self, info):
+        return CategoryTranslation.get_pk(gid=self.gid)
+
 
 class CategoryTranslationList(graphene.ObjectType):
     data = graphene.List(CategoryTranslationNode)

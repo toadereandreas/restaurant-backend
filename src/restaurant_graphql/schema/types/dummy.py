@@ -12,6 +12,11 @@ class DummyNode(RestaurantObjectType):
             'test_age'
         ]
 
+    id = graphene.ID()
+
+    def resolve_id(self, info):
+        return Dummy.get_pk(gid=self.gid)
+
 
 class DummyList(graphene.ObjectType):
     data = graphene.List(DummyNode)

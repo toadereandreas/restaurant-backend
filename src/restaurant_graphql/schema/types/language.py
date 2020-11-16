@@ -12,6 +12,10 @@ class LanguageNode(RestaurantObjectType):
             'code',
         ]
 
+    id = graphene.ID()
+
+    def resolve_id(self, info):
+        return Language.get_pk(gid=self.gid)
 
 class LanguageList(graphene.ObjectType):
     data = graphene.List(LanguageNode)

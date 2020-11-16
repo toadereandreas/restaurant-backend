@@ -11,6 +11,11 @@ class CategoryNode(RestaurantObjectType):
             'internal_name'
         ]
 
+    id = graphene.ID()
+
+    def resolve_id(self, info):
+        return Category.get_pk(gid=self.gid)
+
 
 class CategoryList(graphene.ObjectType):
     data = graphene.List(CategoryNode)

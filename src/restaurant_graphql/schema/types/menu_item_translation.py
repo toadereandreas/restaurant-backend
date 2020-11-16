@@ -14,6 +14,10 @@ class MenuItemTranslationNode(RestaurantObjectType):
             'description'
         ]
 
+    id = graphene.ID()
+
+    def resolve_id(self, info):
+        return MenuItemTranslation.get_pk(gid=self.gid)
 
 class MenuItemTranslationList(graphene.ObjectType):
     data = graphene.List(MenuItemTranslationNode)

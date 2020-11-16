@@ -16,6 +16,11 @@ class MenuItemNode(RestaurantObjectType):
             'category'
         ]
 
+    id = graphene.ID()
+
+    def resolve_id(self, info):
+        return MenuItem.get_pk(gid=self.gid)
+
 
 class MenuItemList(graphene.ObjectType):
     data = graphene.List(MenuItemNode)

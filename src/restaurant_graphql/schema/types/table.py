@@ -12,6 +12,11 @@ class TableNode(RestaurantObjectType):
             'code'
         ]
 
+    id = graphene.ID()
+
+    def resolve_id(self, info):
+        return Table.get_pk(gid=self.gid)
+
 
 class TableList(graphene.ObjectType):
     data = graphene.List(TableNode)

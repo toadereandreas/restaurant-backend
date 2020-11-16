@@ -13,6 +13,11 @@ class AllergenTranslationNode(RestaurantObjectType):
             'language'
         ]
 
+    id = graphene.ID()
+
+    def resolve_id(self, info):
+        return AllergenTranslation.get_pk(gid=self.gid)
+
 
 class AllergenTranslationList(graphene.ObjectType):
     data = graphene.List(AllergenTranslationNode)
