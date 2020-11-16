@@ -3,7 +3,8 @@ from .base import GlobalID
 
 
 class Table(GlobalID, models.Model):
-    table_code = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
+    code = models.IntegerField(unique=True)
 
     def __str__(self):
-        return self.table_code
+        return self.name + " - " + str(self.code)

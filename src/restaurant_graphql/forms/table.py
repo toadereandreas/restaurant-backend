@@ -7,6 +7,7 @@ class TableForm(BaseForm):
     class Meta:
         model = Table
         fields = [
-            'table_code'
+            'name',
+            'code'
         ]
 

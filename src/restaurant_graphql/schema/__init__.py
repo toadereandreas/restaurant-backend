@@ -9,7 +9,7 @@ from .allergen_translation import Query as AllergenTranslationQuery
 from .menu_item import Query as MenuItemQuery
 from .menu_item_translation import Query as MenuItemTranslationQuery
 from .table import Query as TableQuery
-from .booking import Query as BookingQuery
+from .booking import Query as BookingQuery, Mutation as BookingMutation
 from .user import Query as UserQuery, Mutation as UserMutation
 # from graphql_auth.schema import UserQuery, MeQuery
 
@@ -35,6 +35,7 @@ class Mutation(
     UserMutation,
     LanguageMutation,
     CategoryMutation,
+    BookingMutation,
     graphene.ObjectType
 ):
     pass

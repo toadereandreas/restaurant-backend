@@ -10,4 +10,4 @@ class Booking(GlobalID, models.Model):
     phone_number = models.CharField(max_length=50)
 
     def __str__(self):
-        return self.table.table_code + " no.persons: " + str(self.number_of_persons) + " contact: " + self.phone_number
+        return self.table.name + " no.persons: " + str(self.number_of_persons) + " contact: " + self.phone_number

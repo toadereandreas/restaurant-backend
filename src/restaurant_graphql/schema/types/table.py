@@ -8,7 +8,8 @@ class TableNode(RestaurantObjectType):
         model = Table
         fields = [
             'gid',
-            'table_code'
+            'name',
+            'code'
         ]
 
 
