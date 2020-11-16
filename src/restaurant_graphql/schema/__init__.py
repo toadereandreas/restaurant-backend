@@ -8,6 +8,8 @@ from .allergen import Query as AllergenQuery
 from .allergen_translation import Query as AllergenTranslationQuery
 from .menu_item import Query as MenuItemQuery
 from .menu_item_translation import Query as MenuItemTranslationQuery
+from .table import Query as TableQuery
+from .booking import Query as BookingQuery, Mutation as BookingMutation
 from .user import Query as UserQuery, Mutation as UserMutation
 # from graphql_auth.schema import UserQuery, MeQuery
 
@@ -21,6 +23,8 @@ class Query(
     AllergenTranslationQuery,
     MenuItemQuery,
     MenuItemTranslationQuery,
+    TableQuery,
+    BookingQuery,
     graphene.ObjectType
 ):
     pass
@@ -31,6 +35,7 @@ class Mutation(
     UserMutation,
     LanguageMutation,
     CategoryMutation,
+    BookingMutation,
     graphene.ObjectType
 ):
     pass
