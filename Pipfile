@@ -18,6 +18,7 @@ psycopg2-binary = {version = "*", sys_platform = "== 'linux'"}
 django-graphql-auth = "*"
 django-storages = "*"
 pillow = "*"
+graphene-subscriptions = "*"
 
 [scripts]
 server = "python manage.py runserver"

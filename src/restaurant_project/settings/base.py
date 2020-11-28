@@ -42,9 +42,15 @@ INSTALLED_APPS = [
     'graphql_auth',
     'graphql_jwt.refresh_token.apps.RefreshTokenConfig',
     'restaurant_entities.users',
-
     'storages',
+    'graphene_subscriptions',
 ]
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
 
 CORS_ORIGIN_ALLOW_ALL = True
 
