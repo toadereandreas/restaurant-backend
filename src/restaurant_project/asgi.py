@@ -8,9 +8,13 @@ https://docs.djangoproject.com/en/3.0/howto/deployment/asgi/
 """
 
 import os
-
+import django
 from django.core.asgi import get_asgi_application
+from channels.routing import ProtocolTypeRouter
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'restaurant.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'restaurant_project.settings.base')
+django.setup()
 
-application = get_asgi_application()
+application = ProtocolTypeRouter({
+    "http": get_asgi_application(),
+})

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'graphql_jwt.refresh_token.apps.RefreshTokenConfig',
     'restaurant_entities.users',
     'storages',
+    'channels',
     'graphene_subscriptions',
 ]
 
@@ -84,6 +85,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'restaurant_project.wsgi.application'
+
+ASGI_APPLICATION = "restaurant_project.routing.application"
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -173,7 +176,7 @@ MEDIA_URL = '/images/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static')
 
 # STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, 'conference_project', 'static')
+#     '/home/cipri/restaurant-backend/static'
 # ]
 # # STATICFILES_DIRS = [
 # #     '/var/app/current/src/restaurant_project/static/'

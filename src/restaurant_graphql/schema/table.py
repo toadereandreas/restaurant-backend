@@ -1,4 +1,5 @@
 import graphene
+from rx import Observable
 
 from restaurant_entities.models import Table
 from restaurant_graphql.schema.types.base import ErrorType
@@ -61,3 +62,12 @@ class CreateTableMutation(graphene.Mutation):
 
 class Mutation(graphene.ObjectType):
     create_table = CreateTableMutation.Field()
+
+from datetime import datetime
+
+class Subscription(graphene.ObjectType):
+    hello = graphene.String()
+
+    def resolve_hello(root, info):
+        return Observable.interval(3000) \
+                         .map(lambda i: "hello world!" + str(datetime.now()))
