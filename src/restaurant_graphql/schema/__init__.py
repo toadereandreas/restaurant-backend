@@ -11,9 +11,9 @@ from .menu_item_translation import Query as MenuItemTranslationQuery
 from .table import Query as TableQuery, Subscription as TableSubscription
 from .booking import Query as BookingQuery, Mutation as BookingMutation
 from .user import Query as UserQuery, Mutation as UserMutation
-from .order import Query as OrderQuery, Subscription as OrderSubscription
-from .order_menu_item import Query as OrderMenuItemQuery, Subscription as OrderMenuItemSubscription
-from .serving import Query as ServingQuery, Subscription as ServingSubscription
+from .order import Query as OrderQuery, Mutation as OrderMutation, Subscription as OrderSubscription
+from .order_menu_item import Query as OrderMenuItemQuery,  Mutation as OrderMenuItemMutation,Subscription as OrderMenuItemSubscription
+from .serving import Query as ServingQuery, Mutation as ServingMutation, Subscription as ServingSubscription
 # from graphql_auth.schema import UserQuery, MeQuery
 
 class Query(
@@ -42,6 +42,9 @@ class Mutation(
     LanguageMutation,
     CategoryMutation,
     BookingMutation,
+    ServingMutation,
+    OrderMutation,
+    OrderMenuItemMutation,
     graphene.ObjectType
 ):
     pass

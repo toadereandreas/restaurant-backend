@@ -15,9 +15,9 @@ from graphql.error import GraphQLError
 
 class Query(graphene.ObjectType):
     orders = graphene.Field(
-        OrderList,
-        id=graphene.ID(),
-    )
+        OrderList) #,
+        #id=graphene.ID(),
+    #)
     order = graphene.Field(OrderNode, id=graphene.ID(required=True))
 
     def resolve_order(self, info, id):
@@ -26,6 +26,117 @@ class Query(graphene.ObjectType):
     def resolve_orders(self, info, **kwargs):
         qs = Order.objects.all()
         return OrderList(qs)
+
+
+class CreateOrderMutation(graphene.Mutation):
+    class Arguments:
+        input = OrderInput(
+            required = True,
+            description = "Fields required to create an order."
+        )
+
+    order = graphene.Field(
+        OrderNode,
+        description = "Created order."
+    )
+
+    errors = graphene.List(
+        ErrorType,
+        description = 'List of errors that occurred executing the mutation.'
+    )
+
+    class Meta:
+        description = "Creates an order."
+
+    @classmethod
+    def mutate(cls, root, info, **kwargs):
+        # user = info.context.user
+        # kwargs['input']['user'] = user
+        # kwargs['input']['serving'] = "1a857052-5628-4bd9-a378-45fbf960ecde"
+        form = OrderForm(data=kwargs['input'])
+
+        if not form.is_valid():
+            return CreateOrderMutation(
+                errors = get_errors(form.errors)
+            )
+        order = form.save()
+        return CreateOrderMutation(
+            order=order
+        )
+
+class DeleteOrderMutation(graphene.Mutation):
+    class Arguments:
+        id=graphene.ID(required=True,description="id to delete an orde")
+    id=graphene.ID()
+
+    @classmethod
+    def mutate(cls, root, info, id):
+        serving = Serving.objects.get(gid=id)
+        serving.delete()
+
+        return DeleteServingMutation(
+            id=id
+        )
+
+
+class DeleteOrderMutation(graphene.Mutation):
+    class Arguments:
+        id=graphene.ID(required=True,description="id to delete an order")
+    id=graphene.ID()
+
+    @classmethod
+    def mutate(cls, root, info, id):
+        order = Order.objects.get(gid=id)
+        order.delete()
+
+        return DeleteOrderMutation(
+            id=id
+        )
+
+
+class UpdateOrderMutation(graphene.Mutation):
+    class Arguments:
+        id = graphene.ID(required=True, description="id to update an order")
+        input = OrderInput(
+            required = True,
+            description = "Fields required to create an order."
+        )
+
+    order = graphene.Field(
+        OrderNode,
+        description = "Updated order."
+    )
+
+    errors = graphene.List(
+        ErrorType,
+        description = 'List of errors that occurred executing the mutation.'
+    )
+
+    class Meta:
+        description = "Updates an order."
+
+    @classmethod
+    def mutate(cls, root, info, id, **kwargs):
+        order=Order.objects.get(gid=id)
+        form = OrderForm(data=kwargs['input'], instance=order)
+
+        if not form.is_valid():
+            return UpdateOrderMutation(
+                errors = get_errors(form.errors)
+            )
+        order = form.save()
+
+        return UpdateOrderMutation(
+            order=order
+        )
+
+
+    
+class Mutation(graphene.ObjectType):
+    create_order = CreateOrderMutation.Field()
+    delete_order=DeleteOrderMutation.Field()
+    update_order=UpdateOrderMutation.Field()
+
 
 class Subscription(graphene.ObjectType):
     orders = graphene.Field(OrderList)
