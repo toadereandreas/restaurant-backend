@@ -12,6 +12,14 @@ services:
       - 8000:8000
     command: cd src && daphne restaurant_project.asgi:application -b 0.0.0.0 -p 8000
     # command: cd src && gunicorn restaurant_project.asgi:application -w 4 -k uvicorn.workers.UvicornH11Worker -b 0.0.0.0:8000
+  nginx:
+    build:
+      context: .
+      dockerfile: docker/prod/nginx/Dockerfile
+    ports:
+     - 80:80
+    depends_on:
+      - python
   # postgres:
   #   image: postgres:13.1
   #   restart: always
