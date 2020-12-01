@@ -1,0 +1,24 @@
+version: '3.8'
+volumes:
+  pgdata:
+services:
+  python:
+    build:
+      context: .
+      dockerfile: docker/dev/python/Dockerfile
+    volumes:
+      - .:/app
+    ports:
+      - 8000:8000
+    command: python src/manage.py runserver 0.0.0.0:8000
+  postgres:
+    image: postgres:13.1
+    restart: always
+    environment:
+      POSTGRES_USER: restaurant
+      POSTGRES_DB: restaurant
+      POSTGRES_PASSWORD: restaurant
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
