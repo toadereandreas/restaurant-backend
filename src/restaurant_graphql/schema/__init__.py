@@ -58,4 +58,4 @@ class Subscription(
 ):
     pass
 
-schema = graphene.Schema(query=Query, mutation=Mutation, subscription=Subscription)
+schema = graphene.Schema(query=Query, mutation=Mutation)

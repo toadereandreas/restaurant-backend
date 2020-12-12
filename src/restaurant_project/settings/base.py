@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'restaurant_entities.users',
     'storages',
     'channels',
-    'graphene_subscriptions',
 ]
 
 CHANNEL_LAYERS = {
