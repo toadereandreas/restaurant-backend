@@ -21,9 +21,9 @@ from restaurant_entities.consumers import ChatConsumer, ServingConsumer, OrderCo
 
 websocket_urlpatterns = [
     path('ws/chat/<room_name>/', ChatConsumer.as_asgi()),
-    path('ws/serving/<waiter>/', ServingConsumer.as_asgi()),
-    path('ws/order/<waiter>/', OrderConsumer.as_asgi()),
-    path('ws/ordermenuitem/<waiter>/', OrderMenuItemConsumer.as_asgi()),
+    path('ws/serving/<int:waiter>/', ServingConsumer.as_asgi()),
+    path('ws/order/<int:waiter>/', OrderConsumer.as_asgi()),
+    path('ws/ordermenuitem/<int:waiter>/', OrderMenuItemConsumer.as_asgi()),
 ]
 
 urlpatterns = [
