@@ -136,18 +136,3 @@ class Mutation(graphene.ObjectType):
     create_order = CreateOrderMutation.Field()
     delete_order=DeleteOrderMutation.Field()
     update_order=UpdateOrderMutation.Field()
-
-
-class Subscription(graphene.ObjectType):
-    orders = graphene.Field(OrderList)
-    order_created = graphene.Field(OrderNode)
-
-    def resolve_orders(root, info):
-        return Observable.interval(3000).map(lambda i: orders)
-
-    def resolve_order_created(root, info):
-        return root.filter(
-            lambda event:
-                event.operation == CREATED and
-                isinstance(event.instance, Order)
-        ).map(lambda event: event.instance)

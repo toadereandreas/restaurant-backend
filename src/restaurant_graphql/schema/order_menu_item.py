@@ -121,27 +121,3 @@ class Mutation(graphene.ObjectType):
     create_order_menu_item = CreateOrderMenuItemMutation.Field()
     delete_order_menu_item=DeleteOrderMenuItemMutation.Field()
     update_order_menu_item=UpdateOrderMenuItemMutation.Field()
-
-class Subscription(graphene.ObjectType):
-    order_menu_items = graphene.Field(OrderMenuItemList, order_id=graphene.ID())
-    order_menu_items_serving = graphene.Field(OrderMenuItemList, serving_id=graphene.ID())
-    # order_menu_items_order = graphene.Field(OrderMenuItemList, order_id=graphene.ID())
-
-    def resolve_order_menu_items(root, info, order_id):
-        return Observable.interval(3000).map(lambda i: OrderMenuItemList(OrderMenuItem.objects.filter(order=Order.objects.get(pk=order_id))))
-
-    def resolve_order_menu_items_serving(root, info, serving_id):
-        return root.filter(
-            lambda event:
-                event.operation == UPDATED #and
-                # isinstance(event.instance, OrderMenuItem) and
-                # event.instance.serving.pk == int(serving_id)
-        ).map(lambda event: OrderMenuItemList(OrderMenuItem.objects.all()))
-
-    # def resolve_order_menu_items_order(root, info, order_id):
-    #     return root.filter(
-    #         lambda event:
-    #             (event.operation == UPDATED or event.operation == CREATED) and
-    #             isinstance(event.instance, OrderMenuItem) and
-    #             event.instance.order.pk == int(order_id)
-    #     ).map(lambda event: OrderMenuItemList(OrderMenuItem.objects.filter(order=Order.objects.get(pk=order_id))))

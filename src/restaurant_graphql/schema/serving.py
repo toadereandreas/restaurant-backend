@@ -120,17 +120,3 @@ class Mutation(graphene.ObjectType):
     create_serving = CreateServingMutation.Field()
     delete_serving=DeleteServingMutation.Field()
     update_serving=UpdateServingMutation.Field()
-
-class Subscription(graphene.ObjectType):
-    servings = graphene.Field(ServingList)
-    serving_created = graphene.Field(ServingNode)
-
-    def resolve_servings(root, info):
-        return Observable.interval(3000).map(lambda i: servings)
-
-    def resolve_serving_created(root, info):
-        return root.filter(
-            lambda event:
-                event.operation == CREATED and
-                isinstance(event.instance, Serving)
-        ).map(lambda event: event.instance)

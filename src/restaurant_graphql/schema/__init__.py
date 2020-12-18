@@ -8,12 +8,12 @@ from .allergen import Query as AllergenQuery
 from .allergen_translation import Query as AllergenTranslationQuery
 from .menu_item import Query as MenuItemQuery
 from .menu_item_translation import Query as MenuItemTranslationQuery
-from .table import Query as TableQuery, Subscription as TableSubscription
+from .table import Query as TableQuery
 from .booking import Query as BookingQuery, Mutation as BookingMutation
 from .user import Query as UserQuery, Mutation as UserMutation
-from .order import Query as OrderQuery, Mutation as OrderMutation, Subscription as OrderSubscription
-from .order_menu_item import Query as OrderMenuItemQuery,  Mutation as OrderMenuItemMutation,Subscription as OrderMenuItemSubscription
-from .serving import Query as ServingQuery, Mutation as ServingMutation, Subscription as ServingSubscription
+from .order import Query as OrderQuery, Mutation as OrderMutation
+from .order_menu_item import Query as OrderMenuItemQuery,  Mutation as OrderMenuItemMutation
+from .serving import Query as ServingQuery, Mutation as ServingMutation
 # from graphql_auth.schema import UserQuery, MeQuery
 
 class Query(
@@ -45,15 +45,6 @@ class Mutation(
     ServingMutation,
     OrderMutation,
     OrderMenuItemMutation,
-    graphene.ObjectType
-):
-    pass
-
-class Subscription(
-    TableSubscription,
-    ServingSubscription,
-    OrderSubscription,
-    OrderMenuItemSubscription,
     graphene.ObjectType
 ):
     pass
