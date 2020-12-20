@@ -1,5 +1,7 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
+from ..signals.serving import connect_serving
+from asgiref.sync import sync_to_async
 
 
 class ServingConsumer(AsyncWebsocketConsumer):
@@ -13,6 +15,7 @@ class ServingConsumer(AsyncWebsocketConsumer):
         )
 
         await self.accept()
+        await sync_to_async(connect_serving.send)(sender=self.__class__, pk=self.waiter)
 
     async def disconnect(self, close_code):
         await self.channel_layer.group_discard(
