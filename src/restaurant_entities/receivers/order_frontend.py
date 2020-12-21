@@ -7,7 +7,9 @@ import json
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 
-
+# class Ss:
+#
+#     @staticmethod
 def send_orders_frontend(data, room_group_name):
     channel_layer = get_channel_layer()
     async_to_sync(channel_layer.group_send)(
@@ -17,17 +19,23 @@ def send_orders_frontend(data, room_group_name):
             'data': data
         }
     )
+order_list_final=[]
 
 def orders_frontend_to_json(qs):
     order_list = []
     for order in qs:
         order_list.append({
+                "gid": str(order.gid),
                 "note": order.note,
-                "orderColor": order.color,
-                "gid": str(order.gid)
+                "locked": "true",
             })
-
-    return json.dumps(order_list)
+    global order_list_final
+    if order_list_final != order_list:
+        order_list_final = order_list
+        return json.dumps(order_list)
+    order_list_final = order_list
+    return []
+    # return json.dumps(order_list)
 
 @receiver(connect_order_frontend, sender=OrderFrontendConsumer)
 def send_to_order_frontend_consumer_on_connect(sender, pk, **kwargs):
@@ -45,6 +53,8 @@ def send_to_order_frontend_consumer(sender, instance, **kwargs):
 
     # qs = Order.objects.filter(serving__user=instance.serving.user)
     qs = Order.objects.filter(gid=instance.gid)
+    # in exclude also add field "locked"
+    # qs = Order.objects.exclude(note=instance.note)
     data = orders_frontend_to_json(qs)
 
     send_orders_frontend(data, room_group_name)
