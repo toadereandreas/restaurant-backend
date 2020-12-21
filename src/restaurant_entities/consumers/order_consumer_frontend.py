@@ -1,6 +1,6 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
-from ..signals.order import connect_order
+from ..signals.order_frontend import connect_order_frontend
 from asgiref.sync import sync_to_async
 
 
@@ -15,7 +15,7 @@ class OrderFrontendConsumer(AsyncWebsocketConsumer):
         )
 
         await self.accept()
-        await sync_to_async(connect_order.send)(sender=self.__class__, pk=self.waiter)
+        await sync_to_async(connect_order_frontend.send)(sender=self.__class__, pk=self.waiter)
 
     async def disconnect(self, close_code):
         await self.channel_layer.group_discard(
@@ -30,11 +30,11 @@ class OrderFrontendConsumer(AsyncWebsocketConsumer):
         await self.channel_layer.group_send(
             self.room_group_name,
             {
-                'type': 'send_orders',
+                'type': 'send_orders_frontend',
                 'data': data
             }
         )
 
 
-    async def send_orders(self, event):
+    async def send_orders_frontend(self, event):
         await self.send(text_data=event['data'])

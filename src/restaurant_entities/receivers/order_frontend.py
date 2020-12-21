@@ -1,8 +1,8 @@
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from ..models.order.order import Order
-from ..signals.order import connect_order
-from ..consumers.order_consumer import OrderConsumer
+from ..signals.order_frontend import connect_order_frontend
+from ..consumers.order_consumer_frontend import OrderFrontendConsumer
 import json
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
@@ -29,7 +29,7 @@ def orders_frontend_to_json(qs):
 
     return json.dumps(order_list)
 
-@receiver(connect_order, sender=OrderConsumer)
+@receiver(connect_order_frontend, sender=OrderFrontendConsumer)
 def send_to_order_frontend_consumer_on_connect(sender, pk, **kwargs):
     room_group_name = "order_frontend_%s" % str(pk)
 
@@ -43,6 +43,6 @@ def send_to_order_frontend_consumer(sender, instance, **kwargs):
     room_group_name = "order_frontend_%s" % str(instance.serving.user.pk)
 
     qs = Order.objects.filter(serving__user=instance.serving.user)
-    data = orders_to_json(qs)
+    data = orders_frontend_to_json(qs)
 
     send_orders_frontend(data, room_group_name)
