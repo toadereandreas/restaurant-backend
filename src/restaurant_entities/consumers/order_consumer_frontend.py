@@ -6,7 +6,7 @@ from asgiref.sync import sync_to_async
 
 class OrderFrontendConsumer(AsyncWebsocketConsumer):
     async def connect(self):
-        self.waiter = self.scope['url_route']['kwargs']['waiter']
+        self.waiter = self.scope['url_route']['kwargs']['gid']
         self.room_group_name = 'order_frontend_%s' % self.waiter
 
         await self.channel_layer.group_add(

@@ -23,7 +23,7 @@ websocket_urlpatterns = [
     path('ws/chat/<room_name>/', ChatConsumer.as_asgi()),
     path('ws/serving/<int:waiter>/', ServingConsumer.as_asgi()),
     path('ws/order/<int:waiter>/', OrderConsumer.as_asgi()),
-    path('ws/orderfrontend/<int:waiter>/', OrderFrontendConsumer.as_asgi()),
+    path('ws/orderfrontend/<gid>/', OrderFrontendConsumer.as_asgi()),
     path('ws/ordermenuitem/<int:waiter>/', OrderMenuItemConsumer.as_asgi()),
 ]
 

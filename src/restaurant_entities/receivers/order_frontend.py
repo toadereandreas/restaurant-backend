@@ -24,7 +24,7 @@ def orders_frontend_to_json(qs):
         order_list.append({
                 "note": order.note,
                 "orderColor": order.color,
-                "tableId": str(order.serving.gid)
+                "gid": str(order.gid)
             })
 
     return json.dumps(order_list)
@@ -33,16 +33,18 @@ def orders_frontend_to_json(qs):
 def send_to_order_frontend_consumer_on_connect(sender, pk, **kwargs):
     room_group_name = "order_frontend_%s" % str(pk)
 
-    qs = Order.objects.filter(serving__user__pk=pk)
+    # qs = Order.objects.filter(serving__user__pk=pk)
+    qs = Order.objects.filter(gid=pk)
     data = orders_frontend_to_json(qs)
 
     send_orders_frontend(data, room_group_name)
 
 @receiver([post_save, post_delete], sender=Order)
 def send_to_order_frontend_consumer(sender, instance, **kwargs):
-    room_group_name = "order_frontend_%s" % str(instance.serving.user.pk)
+    room_group_name = "order_frontend_%s" % str(instance.gid)
 
-    qs = Order.objects.filter(serving__user=instance.serving.user)
+    # qs = Order.objects.filter(serving__user=instance.serving.user)
+    qs = Order.objects.filter(gid=instance.gid)
     data = orders_frontend_to_json(qs)
 
     send_orders_frontend(data, room_group_name)
