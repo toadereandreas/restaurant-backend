@@ -5,6 +5,8 @@ from asgiref.sync import sync_to_async
 
 
 class OrderFrontendConsumer(AsyncWebsocketConsumer):
+    order_list_final = []
+
     async def connect(self):
         self.waiter = self.scope['url_route']['kwargs']['gid']
         self.room_group_name = 'order_frontend_%s' % self.waiter
