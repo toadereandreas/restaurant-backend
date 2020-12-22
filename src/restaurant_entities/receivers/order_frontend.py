@@ -36,6 +36,8 @@ def orders_frontend_to_json(qs):
 
 @receiver(connect_order_frontend, sender=OrderFrontendConsumer)
 def send_to_order_frontend_consumer_on_connect(sender, pk, **kwargs):
+    OrderFrontendConsumer.order_list_final = []
+
     room_group_name = "order_frontend_%s" % str(pk)
 
     qs = Order.objects.filter(id=pk)
