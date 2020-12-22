@@ -48,10 +48,8 @@ def send_to_order_frontend_consumer_on_connect(sender, pk, **kwargs):
 def send_to_order_frontend_consumer(sender, instance, **kwargs):
     room_group_name = "order_frontend_%s" % str(instance.id)
 
-    # qs = Order.objects.filter(serving__user=instance.serving.user)
     qs = Order.objects.filter(id=instance.id)
     
     # in exclude also add field "locked"
     data = orders_frontend_to_json(qs)
-
     send_orders_frontend(data, room_group_name)

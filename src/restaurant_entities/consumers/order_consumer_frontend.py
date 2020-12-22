@@ -8,8 +8,8 @@ class OrderFrontendConsumer(AsyncWebsocketConsumer):
     order_list_final = []
 
     async def connect(self):
-        self.waiter = self.scope['url_route']['kwargs']['id']
-        self.room_group_name = 'order_frontend_%s' % self.waiter
+        self.id = self.scope['url_route']['kwargs']['id']
+        self.room_group_name = 'order_frontend_%s' % self.id
 
         await self.channel_layer.group_add(
             self.room_group_name,
@@ -17,7 +17,7 @@ class OrderFrontendConsumer(AsyncWebsocketConsumer):
         )
 
         await self.accept()
-        await sync_to_async(connect_order_frontend.send)(sender=self.__class__, pk=self.waiter)
+        await sync_to_async(connect_order_frontend.send)(sender=self.__class__, pk=self.id)
 
     async def disconnect(self, close_code):
         await self.channel_layer.group_discard(
