@@ -53,8 +53,8 @@ class CreateOrderMenuItemMutation(graphene.Mutation):
 
     @classmethod
     def mutate(cls, root, info, **kwargs):
-        user = info.context.user
-        kwargs['input']['user'] = user
+        # user = info.context.user
+        # kwargs['input']['user'] = user
         form = OrderMenuItemForm(data=kwargs['input'])
 
         if not form.is_valid():
