@@ -8,7 +8,7 @@ class OrderFrontendConsumer(AsyncWebsocketConsumer):
     order_list_final = []
 
     async def connect(self):
-        self.waiter = self.scope['url_route']['kwargs']['gid']
+        self.waiter = self.scope['url_route']['kwargs']['id']
         self.room_group_name = 'order_frontend_%s' % self.waiter
 
         await self.channel_layer.group_add(
