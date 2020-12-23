@@ -5,12 +5,14 @@ from restaurant_entities.models.order import Order
 from restaurant_graphql.schema.types.base import ErrorType
 from restaurant_graphql.schema.types.order import (
     OrderList,
-    OrderNode, OrderInput,
+    OrderNode, OrderInput, SetLockedInput
 )
 
 from restaurant_graphql.schema.helpers import get_errors
 from restaurant_graphql.forms.order import OrderForm
 from graphql.error import GraphQLError
+
+import redis
 
 
 class Query(graphene.ObjectType):
@@ -64,19 +66,6 @@ class CreateOrderMutation(graphene.Mutation):
             order=order
         )
 
-class DeleteOrderMutation(graphene.Mutation):
-    class Arguments:
-        id=graphene.ID(required=True,description="id to delete an orde")
-    id=graphene.ID()
-
-    @classmethod
-    def mutate(cls, root, info, id):
-        serving = Serving.objects.get(gid=id)
-        serving.delete()
-
-        return DeleteServingMutation(
-            id=id
-        )
 
 
 class DeleteOrderMutation(graphene.Mutation):
@@ -131,8 +120,79 @@ class UpdateOrderMutation(graphene.Mutation):
         )
 
 
+class SetFieldMutation(graphene.Mutation):
+    # class Arguments:
+    #     id = graphene.ID(required=True, description="id to update an order")
+    #     input = SetLockedInput(
+    #         required = True,
+    #         description = "Fields required to set locked field for an order."
+    #     )
+
+    # order = graphene.Field(
+    #     OrderNode,
+    #     description = "Updated locked."
+    # )
+
+    # errors = graphene.List(
+    #     ErrorType,
+    #     description = 'List of errors that occurred executing the mutation.'
+    # )
+    #
+    # class Meta:
+    #     description = "Updates an order."
+
+    # @classmethod
+    # def mutate(cls, root, info, id):
+    #     order = Order.objects.get(gid=id)
+    #     order.delete()
+    #
+    #     return SetFieldMutation(
+    #         id=id
+    #     )
+
+    # redis_instance = redis.StrictRedis(host='localhost',
+    #                                    port=6379, db=0)
+
+    # def manage_item(self,request, key, new_value=0):
+    #     if request == 'GET':
+    #         return redis_instance.get(key)
+    #
+    #     elif request == 'PUT':
+    #         new_value = request_data['new_value']
+    #         value = redis_instance.get('key')
+    #         if value:
+    #             redis_instance.set(key, new_value)
+    #         return value
+
+
+    class Arguments:
+        id=graphene.ID(required=True,description="id to delete an order")
+        # input = SetLockedInput(
+        #     required = True,
+        #     description = "Fields required to set locked field for an order."
+        # )
+        locked = graphene.Boolean(required=True)
+    id=graphene.ID()
+    locked = graphene.Boolean()
+
+    @classmethod
+    def mutate(cls, root, info, id,locked):
+        # order = Order.objects.get(gid=id)
+        # order.delete()
+        redis_instance = redis.StrictRedis(host='localhost',
+                                           port=6379, db=0)
+
+        redis_instance.set(str(id), str(locked))
+
+        return DeleteOrderMutation(
+            id=id
+        )
+
+
+
     
 class Mutation(graphene.ObjectType):
     create_order = CreateOrderMutation.Field()
     delete_order=DeleteOrderMutation.Field()
     update_order=UpdateOrderMutation.Field()
+    set_field=SetFieldMutation.Field()
