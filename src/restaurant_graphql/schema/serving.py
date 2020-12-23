@@ -50,8 +50,8 @@ class CreateServingMutation(graphene.Mutation):
 
     @classmethod
     def mutate(cls, root, info, **kwargs):
-        user = info.context.user
-        kwargs['input']['user'] = user
+        # user = info.context.user
+        # kwargs['input']['user'] = user
         form = ServingForm(data=kwargs['input'])
 
         if not form.is_valid():
