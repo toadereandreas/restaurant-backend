@@ -11,8 +11,6 @@ class OrderForm(BaseForm):
             'serving',
             'color',
             'note',
-            # 'locked',
         ]
-    # locked = models.BooleanField()
 
     # serving = forms.UUIDField(required=True)

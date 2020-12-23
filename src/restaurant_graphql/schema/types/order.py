@@ -27,12 +27,9 @@ class OrderNode(RestaurantObjectType):
 
         redis_instance = redis.StrictRedis(host='localhost',
                                            port=6379, db=0)
-
-        # print(str(self.id),"redis",len(str(redis_instance.get(str(self.id))))," apoi ",str(redis_instance.get(str(self.id)))=="b'True'")
-        if str(redis_instance.get(self.id)) == "b'True'":
+        if str(redis_instance.get(str(self.gid))) == "b'True'":
             return True
         return False
-        # return redis_instance.get(str(self.id))
 
 
 class OrderList(graphene.ObjectType):
@@ -44,6 +41,3 @@ class OrderInput(graphene.InputObjectType):
     color = graphene.String()
     note = graphene.String()
 
-
-class SetLockedInput(graphene.InputObjectType):
-    locked = graphene.Boolean()
