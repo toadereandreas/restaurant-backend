@@ -12,6 +12,8 @@ from restaurant_graphql.schema.helpers import get_errors
 from restaurant_graphql.forms.serving import ServingForm
 from graphql.error import GraphQLError
 
+import redis
+
 
 class Query(graphene.ObjectType):
     servings = graphene.Field(
@@ -71,6 +73,10 @@ class DeleteServingMutation(graphene.Mutation):
 
     @classmethod
     def mutate(cls, root, info, id):
+        redis_instance = redis.StrictRedis(host='localhost',
+                                           port=6379, db=0)
+        redis_instance.delete(str(id))
+
         serving = Serving.objects.get(gid=id)
         serving.delete()
 
@@ -116,7 +122,33 @@ class UpdateServingMutation(graphene.Mutation):
         )
 
 
+
+class SetCalledMutation(graphene.Mutation):
+
+    class Arguments:
+        id = graphene.ID(required=True,description="id to delete an order")
+        called = graphene.Boolean(required=True)
+    id = graphene.ID()
+    called = graphene.Boolean()
+
+    @classmethod
+    def mutate(cls, root, info, id,called):
+        redis_instance = redis.StrictRedis(host='localhost',
+                                           port=6379, db=0)
+
+        if called:
+            redis_instance.set(str(id), str(called))
+        else:
+            redis_instance.delete(str(id))
+
+        return SetCalledMutation(
+            id=id,
+            called=called
+        )
+
+
 class Mutation(graphene.ObjectType):
     create_serving = CreateServingMutation.Field()
     delete_serving=DeleteServingMutation.Field()
     update_serving=UpdateServingMutation.Field()
+    set_called=SetCalledMutation.Field()

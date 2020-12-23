@@ -44,6 +44,9 @@ INSTALLED_APPS = [
     'restaurant_entities.users',
     'storages',
     'channels',
+    
+    # 'rest_framework',
+    # 'api',
 ]
 
 CHANNEL_LAYERS = {
@@ -173,6 +176,9 @@ STATIC_ROOT = 'static'
 
 MEDIA_URL = '/images/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static')
+
+# REDIS_HOST = 'localhost'
+# REDIS_PORT = 6379
 
 # STATICFILES_DIRS = [
 #     '/home/cipri/restaurant-backend/static'

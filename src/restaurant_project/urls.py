@@ -14,10 +14,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.views.decorators.csrf import csrf_exempt
 from graphene_django.views import GraphQLView
 from restaurant_entities.consumers import ChatConsumer, ServingConsumer, OrderConsumer, OrderFrontendConsumer, OrderMenuItemConsumer
+# from django.conf.urls import include
+# from restaurant_project.api import urls_
 
 websocket_urlpatterns = [
     path('ws/chat/<room_name>/', ChatConsumer.as_asgi()),
@@ -30,5 +32,7 @@ websocket_urlpatterns = [
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('graphql/', csrf_exempt(GraphQLView.as_view(graphiql=True))),
+    # path('api/', include('api.urls')),
+    
 ]
 

@@ -10,7 +10,7 @@ class OrderForm(BaseForm):
         fields = [
             'serving',
             'color',
-            'note'
+            'note',
         ]
 
     # serving = forms.UUIDField(required=True)
