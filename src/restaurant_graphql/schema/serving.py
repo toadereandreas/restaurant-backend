@@ -132,7 +132,10 @@ class SetCalledMutation(graphene.Mutation):
         redis_instance = redis.StrictRedis(host='localhost',
                                            port=6379, db=0)
 
-        redis_instance.set(str(id), str(called))
+        if called:
+            redis_instance.set(str(id), str(called))
+        else:
+            redis_instance.delete(str(id))
 
         return SetCalledMutation(
             id=id,

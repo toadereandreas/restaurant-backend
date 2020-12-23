@@ -132,8 +132,11 @@ class SetLockedMutation(graphene.Mutation):
     def mutate(cls, root, info, id,locked):
         redis_instance = redis.StrictRedis(host='localhost',
                                            port=6379, db=0)
-
-        redis_instance.set(str(id), str(locked))
+        #print(locked)
+        if locked:
+            redis_instance.set(str(id), str(locked))
+        else:
+            redis_instance.delete(str(id))
 
         return SetLockedMutation(
             id=id,
