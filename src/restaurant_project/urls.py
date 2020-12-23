@@ -32,6 +32,7 @@ websocket_urlpatterns = [
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('graphql/', csrf_exempt(GraphQLView.as_view(graphiql=True))),
-    path('api/', include('api.urls')),
+    # path('api/', include('api.urls')),
+    
 ]
 
