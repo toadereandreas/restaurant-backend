@@ -75,6 +75,10 @@ class DeleteOrderMutation(graphene.Mutation):
 
     @classmethod
     def mutate(cls, root, info, id):
+        redis_instance = redis.StrictRedis(host='localhost',
+                                           port=6379, db=0)
+        redis_instance.delete(str(id))
+
         order = Order.objects.get(gid=id)
         order.delete()
 
