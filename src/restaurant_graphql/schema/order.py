@@ -12,7 +12,6 @@ from restaurant_graphql.schema.helpers import get_errors
 from restaurant_graphql.forms.order import OrderForm
 from graphql.error import GraphQLError
 
-import redis
 
 
 class Query(graphene.ObjectType):
@@ -75,9 +74,6 @@ class DeleteOrderMutation(graphene.Mutation):
 
     @classmethod
     def mutate(cls, root, info, id):
-        redis_instance = redis.StrictRedis(host='localhost',
-                                           port=6379, db=0)
-        redis_instance.delete(str(id))
 
         order = Order.objects.get(gid=id)
         order.delete()
@@ -124,32 +120,8 @@ class UpdateOrderMutation(graphene.Mutation):
         )
 
 
-class SetLockedMutation(graphene.Mutation):
-
-    class Arguments:
-        id = graphene.ID(required=True,description="id to delete an order")
-        locked = graphene.Boolean(required=True)
-    id = graphene.ID()
-    locked = graphene.Boolean()
-
-    @classmethod
-    def mutate(cls, root, info, id,locked):
-        redis_instance = redis.StrictRedis(host='localhost',
-                                           port=6379, db=0)
-        #print(locked)
-        if locked:
-            redis_instance.set(str(id), str(locked))
-        else:
-            redis_instance.delete(str(id))
-
-        return SetLockedMutation(
-            id=id,
-            locked=locked
-        )
-
 
 class Mutation(graphene.ObjectType):
     create_order = CreateOrderMutation.Field()
     delete_order=DeleteOrderMutation.Field()
     update_order=UpdateOrderMutation.Field()
-    set_locked = SetLockedMutation.Field()

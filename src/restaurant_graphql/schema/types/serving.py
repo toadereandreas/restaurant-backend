@@ -11,12 +11,13 @@ class ServingNode(RestaurantObjectType):
             'gid',
             'code',
             'user',
-            'name'
+            'name',
+            'called'
         ]
 
     id = graphene.ID()
     user_id = graphene.ID()
-    called = graphene.Boolean()
+    # called = graphene.Boolean()
 
 
     def resolve_id(self, info):
@@ -25,13 +26,13 @@ class ServingNode(RestaurantObjectType):
     def resolve_user_id(self, info):
         return CustomUser.objects.get(username=self.user.username).pk
 
-    def resolve_called(self, info):
-        #return False
-        redis_instance = redis.StrictRedis(host='localhost',
-                                           port=6379, db=0)
-        if str(redis_instance.get(str(self.gid))) == "b'True'":
-            return True
-        return False
+    # def resolve_called(self, info):
+    #     #return False
+    #     redis_instance = redis.StrictRedis(host='localhost',
+    #                                        port=6379, db=0)
+    #     if str(redis_instance.get(str(self.gid))) == "b'True'":
+    #         return True
+    #     return False
 
 
 class ServingList(graphene.ObjectType):
@@ -42,3 +43,4 @@ class ServingInput(graphene.InputObjectType):
     code = graphene.String()
     user = graphene.String()
     name = graphene.String()
+    called = graphene.Boolean()

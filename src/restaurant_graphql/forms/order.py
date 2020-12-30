@@ -11,6 +11,7 @@ class OrderForm(BaseForm):
             'serving',
             'color',
             'note',
+            'locked',
         ]
 
     # serving = forms.UUIDField(required=True)

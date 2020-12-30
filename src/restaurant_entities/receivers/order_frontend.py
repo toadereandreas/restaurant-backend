@@ -25,7 +25,7 @@ def orders_frontend_to_json(qs):
         order_list.append({
                 "id": str(order.id),
                 "note": order.note,
-                "locked": "true",
+                "locked": order.locked,
             })
     if OrderFrontendConsumer.order_list_final != order_list:
         OrderFrontendConsumer.order_list_final = order_list

@@ -9,5 +9,6 @@ class ServingForm(BaseForm):
         fields = [
             'code',
             'user',
-            'name'
+            'name',
+            'called',
         ]
