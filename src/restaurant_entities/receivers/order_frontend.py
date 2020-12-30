@@ -42,7 +42,8 @@ def send_to_order_frontend_consumer_on_connect(sender, pk, **kwargs):
 
     qs = Order.objects.filter(id=pk)
     data = orders_frontend_to_json(qs)
-
+    if data==[]:
+        data=json.dumps([])
     send_orders_frontend(data, room_group_name)
 
 
