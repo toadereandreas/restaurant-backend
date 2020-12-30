@@ -39,7 +39,7 @@ def send_to_serving_consumer_on_connect(sender, pk, **kwargs):
 
     send_servings(data, room_group_name)
 
-@receiver([post_save, post_delete], sender=Serving)
+@receiver(post_save, sender=Serving)
 def send_to_serving_consumer(sender, instance, **kwargs):
     room_group_name = "serving_%s" % str(instance.user.pk)
 
