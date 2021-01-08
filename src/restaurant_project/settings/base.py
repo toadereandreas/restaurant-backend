@@ -44,15 +44,20 @@ INSTALLED_APPS = [
     'restaurant_entities.users',
     'storages',
     'channels',
-    
+    'channels_redis',
+
     # 'rest_framework',
     # 'api',
 ]
 
 CHANNEL_LAYERS = {
     "default": {
-        "BACKEND": "channels.layers.InMemoryChannelLayer"
-    }
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": ["redis://:asdfghjkl@redis-19738.c243.eu-west-1-3.ec2.cloud.redislabs.com:19738/0"]
+            # "hosts": [("redis-19738.c243.eu-west-1-3.ec2.cloud.redislabs.com", 19738)],
+        },
+    },
 }
 
 CORS_ORIGIN_ALLOW_ALL = True

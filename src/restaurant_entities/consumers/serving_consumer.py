@@ -2,16 +2,24 @@ import json
 from channels.generic.websocket import AsyncWebsocketConsumer
 from ..signals.serving import connect_serving
 from asgiref.sync import sync_to_async
+import logging
+
+loger = logging.getLogger()
+
 
 class ServingConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         self.waiter = self.scope['url_route']['kwargs']['waiter']
         self.room_group_name = 'serving_%s' % self.waiter
 
+        loger.info('Connected with:' + self.room_group_name)
+
         await self.channel_layer.group_add(
             self.room_group_name,
             self.channel_name
         )
+
+        loger.info('chanel group added')
 
         await self.accept()
         await sync_to_async(connect_serving.send)(sender=self.__class__, pk=self.waiter)
