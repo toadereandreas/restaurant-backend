@@ -17,9 +17,6 @@ def send_servings(data, room_group_name):
         }
     )
 
-    with open('log_receiver.txt', 'a') as f:
-        f.write('send_servigns to cosumer:\n\tsendig to room: %s\n\tdata: %s\n\tcanal: %s\n' % (room_group_name, data, str(channel_layer)) )
-
 def servings_to_json(qs):
     serving_list = []
     for serving in qs:
@@ -39,9 +36,6 @@ def send_to_serving_consumer_on_connect(sender, pk, **kwargs):
     qs = Serving.objects.filter(user__pk=pk)
     data = servings_to_json(qs)
 
-    with open('log_receiver.txt', 'a') as f:
-        f.write('connect_serving receiver:\n\tsendig to room: %s\n\tdata: %s\n' % (room_group_name, data) )
-
     send_servings(data, room_group_name)
 
 @receiver([post_save, post_delete], sender=Serving)
@@ -51,7 +45,4 @@ def send_to_serving_consumer(sender, instance, **kwargs):
     qs = Serving.objects.filter(user=instance.user)
     data = servings_to_json(qs)
     
-    with open('log_receiver.txt', 'a') as f:
-        f.write('post_save/delete receiver:\n\tsendig to room: %s\n\tdata: %s\n' % (room_group_name, data) )
-
     send_servings(data, room_group_name)
