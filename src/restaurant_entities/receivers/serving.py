@@ -18,7 +18,7 @@ def send_servings(data, room_group_name):
     )
 
     with open('log_receiver.txt', 'a') as f:
-        f.write('send_servigns to cosumer:\n\tsendig to room: %s\n\tdata: %s\n' % (room_group_name, data) )
+        f.write('send_servigns to cosumer:\n\tsendig to room: %s\n\tdata: %s\n\tcanal: %s\n' % (room_group_name, data, str(channel_layer)) )
 
 def servings_to_json(qs):
     serving_list = []
