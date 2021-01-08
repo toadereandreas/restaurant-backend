@@ -38,7 +38,7 @@ class ServingConsumer(AsyncWebsocketConsumer):
     async def send_servings(self, event):
 
         with open('log_receiver.txt', 'a') as f:
-            f.write('Send servings to websocket\n')
+            f.write('serving_consumer - Send to websocket:\n\tdata: %s\n' % event['data'])
 
         # Send servings to web socket
         await self.send(text_data=event['data'])
