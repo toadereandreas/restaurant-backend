@@ -7,7 +7,6 @@ import json
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 
-
 def send_servings(data, room_group_name):
     channel_layer = get_channel_layer()
     async_to_sync(channel_layer.group_send)(
@@ -32,6 +31,10 @@ def servings_to_json(qs):
 
 @receiver(connect_serving, sender=ServingConsumer)
 def send_to_serving_consumer_on_connect(sender, pk, **kwargs):
+
+    with open('log_receiver.txt', 'a') as f:
+        f.write('connect_serving receiver\n')
+
     room_group_name = "serving_%s" % str(pk)
 
     qs = Serving.objects.filter(user__pk=pk)
@@ -41,6 +44,10 @@ def send_to_serving_consumer_on_connect(sender, pk, **kwargs):
 
 @receiver([post_save, post_delete], sender=Serving)
 def send_to_serving_consumer(sender, instance, **kwargs):
+
+    with open('log_receiver.txt', 'a') as f:
+        f.write('post_save/delete serving receiver\n')
+
     room_group_name = "serving_%s" % str(instance.user.pk)
 
     qs = Serving.objects.filter(user=instance.user)

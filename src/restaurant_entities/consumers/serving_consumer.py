@@ -2,9 +2,6 @@ import json
 from channels.generic.websocket import AsyncWebsocketConsumer
 from ..signals.serving import connect_serving
 from asgiref.sync import sync_to_async
-import logging
-
-logger = logging.getLogger()
 
 class ServingConsumer(AsyncWebsocketConsumer):
     async def connect(self):
@@ -39,6 +36,9 @@ class ServingConsumer(AsyncWebsocketConsumer):
 
 
     async def send_servings(self, event):
-        logger.info('Send servings to websocket')
+
+        with open('log_receiver.txt', 'a') as f:
+            f.write('Send servings to websocket\n')
+
         # Send servings to web socket
         await self.send(text_data=event['data'])
