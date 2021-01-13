@@ -12,6 +12,9 @@ from restaurant_graphql.schema.helpers import get_errors
 from restaurant_graphql.forms.serving import ServingForm
 from graphql.error import GraphQLError
 
+import string
+import random
+
 
 class Query(graphene.ObjectType):
     servings = graphene.Field(
@@ -117,7 +120,44 @@ class UpdateServingMutation(graphene.Mutation):
         )
 
 
+class GenerateServingCodeMutation(graphene.Mutation):
+    class Arguments:
+        id = graphene.ID(required=True, description="id of the serving")
+
+    serving = graphene.Field(
+        ServingNode,
+        description = "Serving with generated code."
+    )
+
+    errors = graphene.List(
+        ErrorType,
+        description = 'List of errors that occurred executing the mutation.'
+    )
+
+    class Meta:
+        description = "Generates a new code for a serving."
+
+    @classmethod
+    def mutate(cls, root, info, id, **kwargs):
+        serving = Serving.objects.get(gid=id)
+
+        def generate_random_code():
+            return ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(4))
+
+        random_code = generate_random_code()
+        while Serving.objects.filter(code=random_code).exists():
+            random_code = generate_random_code()
+
+        serving.code = random_code
+        serving.save()
+
+        return GenerateServingCodeMutation(
+            serving = serving
+        )
+
+
 class Mutation(graphene.ObjectType):
     create_serving = CreateServingMutation.Field()
-    delete_serving=DeleteServingMutation.Field()
-    update_serving=UpdateServingMutation.Field()
+    delete_serving = DeleteServingMutation.Field()
+    update_serving = UpdateServingMutation.Field()
+    generate_serving_code = GenerateServingCodeMutation.Field()
