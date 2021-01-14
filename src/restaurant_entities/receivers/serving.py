@@ -22,7 +22,7 @@ def servings_to_json(qs):
     for serving in qs:
         serving_list.append({
                 "call": serving.called,
-                "code": serving.pk, # carpeala last minute contact @Andu
+                "code": serving.code,
                 "name": serving.name,
                 "tableId": str(serving.gid)
             })

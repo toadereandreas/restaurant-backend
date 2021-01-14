@@ -142,7 +142,7 @@ class GenerateServingCodeMutation(graphene.Mutation):
         serving = Serving.objects.get(gid=id)
 
         def generate_random_code():
-            return ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(4))
+            return ''.join(random.SystemRandom().choice(string.digits) for _ in range(4))
 
         random_code = generate_random_code()
         while Serving.objects.filter(code=random_code).exists():
