@@ -15,14 +15,14 @@ class ServingNode(RestaurantObjectType):
             'called'
         ]
 
-    id = graphene.ID()
-    user_id = graphene.ID()
-
-    def resolve_id(self, info):
-        return Serving.get_pk(gid=self.gid)
-
-    def resolve_user_id(self, info):
-        return CustomUser.objects.get(username=self.user.username).pk
+    # id = graphene.ID()
+    # user_id = graphene.ID()
+    #
+    # def resolve_id(self, info):
+    #     return Serving.get_pk(gid=self.gid)
+    #
+    # def resolve_user_id(self, info):
+    #     return CustomUser.objects.get(username=self.user.username).pk
 
 
 class ServingList(graphene.ObjectType):

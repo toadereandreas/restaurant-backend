@@ -14,14 +14,14 @@ class OrderNode(RestaurantObjectType):
             'locked',
         ]
 
-    id = graphene.ID()
-    serving_id = graphene.ID()
-
-    def resolve_id(self, info):
-        return Order.get_pk(gid=self.gid)
-
-    def resolve_serving_id(self, info):
-        return Serving.get_pk(gid=self.serving.gid)
+    # id = graphene.ID()
+    # serving_id = graphene.ID()
+    #
+    # def resolve_id(self, info):
+    #     return Order.get_pk(gid=self.gid)
+    #
+    # def resolve_serving_id(self, info):
+    #     return Serving.get_pk(gid=self.serving.gid)
 
 
 class OrderList(graphene.ObjectType):
@@ -29,7 +29,7 @@ class OrderList(graphene.ObjectType):
 
 
 class OrderInput(graphene.InputObjectType):
-    serving = graphene.String()
+    serving = graphene.ID()
     color = graphene.String()
     note = graphene.String()
     locked = graphene.Boolean()
