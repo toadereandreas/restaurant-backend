@@ -34,7 +34,7 @@ def order_menu_items_to_json(qs):
 def send_to_order_menu_item_consumer_on_connect(sender, pk, **kwargs):
     room_group_name = "order_menu_item_%s" % str(pk)
 
-    qs = OrderMenuItem.objects.filter(order__serving__user__pk=pk)
+    qs = OrderMenuItem.objects.filter(order__serving__user__pk=pk, order__locked=False)
     data = order_menu_items_to_json(qs)
     
     send_order_menu_items(data, room_group_name)
@@ -43,7 +43,7 @@ def send_to_order_menu_item_consumer_on_connect(sender, pk, **kwargs):
 def send_to_order_menu_item_consumer(sender, instance, **kwargs):
     room_group_name = "order_menu_item_%s" % str(instance.order.serving.user.pk)
 
-    qs = OrderMenuItem.objects.filter(order__serving__user=instance.order.serving.user)
+    qs = OrderMenuItem.objects.filter(order__serving__user=instance.order.serving.user, order__locked=False)
     data = order_menu_items_to_json(qs)
     
     send_order_menu_items(data, room_group_name)

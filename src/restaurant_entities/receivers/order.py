@@ -33,7 +33,7 @@ def orders_to_json(qs):
 def send_to_order_consumer_on_connect(sender, pk, **kwargs):
     room_group_name = "order_%s" % str(pk)
 
-    qs = Order.objects.filter(serving__user__pk=pk)
+    qs = Order.objects.filter(serving__user__pk=pk, locked=False)
     data = orders_to_json(qs)
 
     send_orders(data, room_group_name)
@@ -42,7 +42,7 @@ def send_to_order_consumer_on_connect(sender, pk, **kwargs):
 def send_to_order_consumer(sender, instance, **kwargs):
     room_group_name = "order_%s" % str(instance.serving.user.pk)
 
-    qs = Order.objects.filter(serving__user=instance.serving.user)
+    qs = Order.objects.filter(serving__user=instance.serving.user, locked=False)
     data = orders_to_json(qs)
 
     send_orders(data, room_group_name)
