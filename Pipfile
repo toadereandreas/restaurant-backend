@@ -13,12 +13,13 @@ django-graphql-jwt = "==0.3.0"
 django-filter = "*"
 django-cors-headers = "*"
 uwsgi = "*"
-psycopg2 = {version = "*", sys_platform = "== 'darwin'"}
-psycopg2-binary = {version = "*", sys_platform = "== 'linux'"}
+psycopg2 = {version = "*",sys_platform = "== 'darwin'"}
+psycopg2-binary = {version = "*",sys_platform = "== 'linux'"}
 django-graphql-auth = "*"
 django-storages = "*"
 pillow = "*"
 graphene-subscriptions = "*"
+boto3 = "*"
 
 [scripts]
 server = "python manage.py runserver"

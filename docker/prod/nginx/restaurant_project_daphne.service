@@ -1,0 +1,12 @@
+[Unit]
+Description=Restaurant Project Daphne Service
+After=network.target
+
+[Service]
+Type=simple 
+User=root
+WorkingDirectory=/app/src
+ExecStart=daphne restaurant_project.asgi:application -b 0.0.0.0 -p 8000
+
+[Install]
+WantedBy=multi-user.target

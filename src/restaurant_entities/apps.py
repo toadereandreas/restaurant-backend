@@ -6,3 +6,4 @@ class RestaurantEntitiesConfig(AppConfig):
 
     def ready(self):
         import restaurant_entities.signals
+        import restaurant_entities.receivers

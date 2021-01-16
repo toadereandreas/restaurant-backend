@@ -44,13 +44,20 @@ INSTALLED_APPS = [
     'restaurant_entities.users',
     'storages',
     'channels',
-    'graphene_subscriptions',
+    'channels_redis',
+
+    # 'rest_framework',
+    # 'api',
 ]
 
 CHANNEL_LAYERS = {
     "default": {
-        "BACKEND": "channels.layers.InMemoryChannelLayer"
-    }
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": ["redis://:asdfghjkl@redis-19738.c243.eu-west-1-3.ec2.cloud.redislabs.com:19738/0"]
+            # "hosts": [("redis-19738.c243.eu-west-1-3.ec2.cloud.redislabs.com", 19738)],
+        },
+    },
 }
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -174,6 +181,9 @@ STATIC_ROOT = 'static'
 
 MEDIA_URL = '/images/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static')
+
+# REDIS_HOST = 'localhost'
+# REDIS_PORT = 6379
 
 # STATICFILES_DIRS = [
 #     '/home/cipri/restaurant-backend/static'
